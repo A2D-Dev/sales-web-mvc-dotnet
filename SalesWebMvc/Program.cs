@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
+using SalesWebMvc.Services;
 namespace SalesWebMvc
 {
     public class Program
@@ -13,6 +14,9 @@ namespace SalesWebMvc
 
             // Registra o SeedService na injeção de dependência
             builder.Services.AddScoped<SeedService>();
+
+            // Registra o SellerService na injeção de dependência
+            builder.Services.AddScoped<SellerService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
