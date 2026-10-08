@@ -18,6 +18,9 @@ namespace SalesWebMvc
             // Registra o SellerService na injeção de dependência
             builder.Services.AddScoped<SellerService>();
 
+            // Registra o DepartmentService na injeção de dependência
+            builder.Services.AddScoped<DepartmentService>();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
