@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Services;
@@ -25,6 +26,13 @@ namespace SalesWebMvc
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+            var enUS = new CultureInfo("en-US");
+
+            var localizationOptions = new RequestLocalizationOptions {
+                DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(enUS),
+                SupportedCultures = new List<CultureInfo> { enUS },
+                SupportedUICultures = new List<CultureInfo> { enUS }
+            };
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -40,8 +48,9 @@ namespace SalesWebMvc
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }            
+            }
 
+            app.UseRequestLocalization(localizationOptions);
             app.UseHttpsRedirection();
             app.UseRouting();
 
