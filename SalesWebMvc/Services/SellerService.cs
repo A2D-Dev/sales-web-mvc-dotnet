@@ -31,14 +31,22 @@ namespace SalesWebMvc.Services
         }
         public async Task RemoveAsync(int id)
         {
-            var obj = await FindByIdAsync(id);
-
-            if (obj != null)
+            try
             {
-                _context.Seller.Remove(obj);
-                await _context.SaveChangesAsync();
+                var obj = await FindByIdAsync(id);
+
+                if (obj != null)
+                {
+                    _context.Seller.Remove(obj);
+                    await _context.SaveChangesAsync();
+                }
             }
+            catch (DbUpdateException)
+            {
+                 throw new IntegrityException("Não é possível excluir o vendedor porque ele possui vendas vinculadas.");
+            }            
         }
+
         public async Task UpdateAsync(Seller obj)
         {
             bool hasAny = await _context.Seller.AnyAsync(x => x.Id == obj.Id);
